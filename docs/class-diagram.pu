@@ -1,0 +1,75 @@
+@startuml
+
+class Person {
+    -name: String
+    -email: String
+    -password: String
+    -skills: String[]
+    -education: String[]
+    -certificates: String[]
+
+    +follow()
+    +unfollow()
+    +connect_to()
+    +disconnect_from()
+    +make_post()
+    +edit_post()
+    +delete_post()
+    +react_to_post()
+    +comment_on_post()
+    +apply_to_job_post()
+}
+
+class Company {
+    -name: String
+    -email: String
+    -password: String
+    -contact_number: Stirng
+   
+    +make_job_post()
+    +edit_job_post()
+    +delete_job_post() 
+}
+
+class Post {
+    -title: String
+    -body: String
+    -images: Image[]
+    -videos: Video[]
+    -disable_reactions: boolean
+    -disable_comments: boolean
+    
+    +get_reactions()
+    +get_comments()
+}
+
+class JobPost {
+    -job_title: String
+    -description: String
+    -minimum_salary: float
+    -maximum_salary: float
+    -required_skills: String[]
+    -required_education: String[]
+    -required_certificates: String[]
+
+    +get_applied_users()
+}
+
+class JobPostForm {
+    -field_name: String[]
+    -field_type: String[]
+    -field_required: boolean[]
+
+    +make_field_required()
+}
+
+Person "*" --- "*" Person: follows >
+Person "*" --- "*" Person: connects to >
+Person "*" --- "*" Company: follows >
+Person "1" --- "*" Post: posts >
+Person "*" --- "*" Post: reacts >
+Person "*" --- "*" Post: comments on >
+Company "1" --- "*" JobPost: posts >
+JobPost *-- JobPostForm
+
+@enduml
