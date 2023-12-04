@@ -15,9 +15,12 @@ rectangle system {
     (React\non Post) as rp
     (Comment\non Post) as cp
     (Share\nPost) as sh_p
+    (Message\na User) as mu
     (Make\nJob Post) as mjp
     (React on\nJob Post) as rjp
     (Comment on\nJob Post) as cjp
+    (Apply on\nJob Post) as ajp
+    (Endorse\nSkill) as es
 
     u0 ..> sp: <<include>>
     u0 ..> mp: <<include>>
@@ -25,11 +28,31 @@ rectangle system {
     u0 ..> cp: <<include>>
     u0 ..> ca: <<include>>
     u0 ..> da: <<include>>
+    u0 ..> mu: <<include>>
+    u0 ..> es: <<include>>
+    u0 ..> ajp: <<include>>
     u0 ..> sjp: <<include>>
     u0 ..> mjp: <<include>>
     u0 ..> rjp: <<include>>
     u0 ..> cjp: <<include>>
     u0 ..> sh_p: <<include>>
 }
+
+:Person: -- es
+:Person: -- ajp
+:Person: -- cjp
+:Person: -- rjp
+:Person: -- mu
+:Person: -- sh_p
+:Person: -- cp
+:Person: -- rp
+:Person: -- mp
+:Person: -- sjp
+:Person: -- sp
+:Person: -- da
+:Person: -- ca
+:Person: -- cpa
+:Company: -- cca
+:Company: -- mjp
 
 @enduml
