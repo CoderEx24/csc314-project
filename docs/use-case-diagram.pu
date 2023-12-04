@@ -1,0 +1,35 @@
+@startuml
+
+left to right direction
+skinparam linetype ortho
+
+rectangle system {
+    (Autenticate) as u0
+    (Create\na Personal Account) as cpa
+    (Create\na Company Account) as cca
+    (Connect to\nan Account) as ca
+    (Disconnect from\nan Acoount) as da
+    (Search\nPosts) as sp
+    (Search\nJob Posts) as sjp
+    (Make\nPost) as mp
+    (React\non Post) as rp
+    (Comment\non Post) as cp
+    (Share\nPost) as sh_p
+    (Make\nJob Post) as mjp
+    (React on\nJob Post) as rjp
+    (Comment on\nJob Post) as cjp
+
+    u0 ..> sp: <<include>>
+    u0 ..> mp: <<include>>
+    u0 ..> rp: <<include>>
+    u0 ..> cp: <<include>>
+    u0 ..> ca: <<include>>
+    u0 ..> da: <<include>>
+    u0 ..> sjp: <<include>>
+    u0 ..> mjp: <<include>>
+    u0 ..> rjp: <<include>>
+    u0 ..> cjp: <<include>>
+    u0 ..> sh_p: <<include>>
+}
+
+@enduml
