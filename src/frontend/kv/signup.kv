@@ -4,7 +4,7 @@
         anchor_y: 'center'
 
         BoxLayout:
-            size_hint: (0.5, 0.4)
+            size_hint: (0.7, 0.5)
             orientation: 'vertical'
 
             TextInput:
@@ -28,7 +28,7 @@
                 Button:
                     text: 'Login'
                     on_press:
-                        root.manager.transition.direction = 'right'
+                        root.manager.transition.direction = 'left'
                         root.manager.current = 'login'
                     
                     

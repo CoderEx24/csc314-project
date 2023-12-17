@@ -4,7 +4,7 @@
         anchor_y: 'center'
 
         BoxLayout:
-            size_hint: (0.3, 0.3)
+            size_hint: (0.8, 0.5)
             
             orientation: 'vertical'
 
@@ -12,12 +12,15 @@
             TextInput:
                 password: True
 
-            GridLayout:
-                cols: 2
+            BoxLayout:
+                orientation: 'horizontal'
 
                 Button:
                     text: 'Login'
                 
                 Button:
                     text: 'Signup'
+                    on_press: 
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'signup'
 

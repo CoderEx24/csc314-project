@@ -1,18 +1,19 @@
+from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.lang import Builder
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager
 from loginscreen import *
+from signupscreen import *
+from os import path
 
-Builder.load_file('kv/main.kv')
+Builder.load_file(path.join(path.dirname(__file__), 'kv', 'main.kv'))
+
+class AppScreen(AnchorLayout):
+    pass
 
 class MainApp(App):
     def build(self):
-        screen_mgr = ScreenManager()
-        login_screen = LoginScreen()
-        
-        screen_mgr.add_widget(login_screen)
-
-        return screen_mgr
+        return AppScreen()
     
 
 if __name__ == '__main__':

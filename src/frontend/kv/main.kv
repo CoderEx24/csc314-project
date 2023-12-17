@@ -1,6 +1,15 @@
-ScreenManager:
-    id: main_manager
+<AppScreen>:
+    anchor_x: 'center'
+    anchor_y: 'center'
 
-    Screen:
-        name: 'login'
+    size_hint: (1, 1)
+
+    ScreenManager:
+        size_hint: (1, 1)
+        id: main_manager
+
         LoginScreen:
+            name: "login"
+
+        SignupScreen:
+            name: "signup"
