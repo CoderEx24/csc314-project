@@ -19,40 +19,55 @@ rectangle system {
     (Make\nJob Post) as mjp
     (React on\nJob Post) as rjp
     (Comment on\nJob Post) as cjp
+    (Share a\nJob Post) as sjp
     (Apply on\nJob Post) as ajp
     (Endorse\nSkill) as es
 
-    u0 ..> sp: <<include>>
-    u0 ..> mp: <<include>>
-    u0 ..> rp: <<include>>
-    u0 ..> cp: <<include>>
-    u0 ..> ca: <<include>>
-    u0 ..> da: <<include>>
-    u0 ..> mu: <<include>>
-    u0 ..> es: <<include>>
-    u0 ..> ajp: <<include>>
-    u0 ..> sjp: <<include>>
-    u0 ..> mjp: <<include>>
-    u0 ..> rjp: <<include>>
-    u0 ..> cjp: <<include>>
-    u0 ..> sh_p: <<include>>
+    (Manage Databases) as md
+    (Maintain System) as ms
+
+    u0 <.. sp: <<include>>
+    u0 <.. mp: <<include>>
+    u0 <.. rp: <<include>>
+    u0 <.. cp: <<include>>
+    u0 <.. ca: <<include>>
+    u0 <.. da: <<include>>
+    u0 <.. mu: <<include>>
+    u0 <.. es: <<include>>
+    u0 <.. ajp: <<include>>
+    u0 <.. sjp: <<include>>
+    u0 <.. mjp: <<include>>
+    u0 <.. rjp: <<include>>
+    u0 <.. cjp: <<include>>
+    u0 <.. sh_p: <<include>>
 }
 
-:Person: -- es
-:Person: -- ajp
-:Person: -- cjp
-:Person: -- rjp
-:Person: -- mu
-:Person: -- sh_p
-:Person: -- cp
-:Person: -- rp
-:Person: -- mp
-:Person: -- sjp
-:Person: -- sp
-:Person: -- da
-:Person: -- ca
-:Person: -- cpa
-:Company: -- cca
-:Company: -- mjp
+es    --[hidden]d-- mp
+ajp   --[hidden]d--   sjp
+cjp   --[hidden]d--   sp
+rjp   --[hidden]d--   da
+mu    --[hidden]d--  ca
+sh_p  --[hidden]d--  cpa
+cp--[hidden]d--rp
+
+:Person: --d-- es
+:Person: --d-- ajp
+:Person: --d-- cjp
+:Person: --d-- rjp
+:Person: --d-- mu
+:Person: --d-- sh_p
+:Person: --d-- cp
+:Person: --d-- rp
+:Person: --d-- mp
+:Person: --d-- sjp
+:Person: --d-- sp
+:Person: --d-- da
+:Person: --d-- ca
+:Person: --d-- cpa
+:Company: --u-- cca
+:Company: --u-- mjp
+
+:Admin: -- ms
+:Admin: -- md
 
 @enduml
