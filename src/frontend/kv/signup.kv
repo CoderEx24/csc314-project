@@ -1,0 +1,34 @@
+<SignupScreen>:
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        BoxLayout:
+            size_hint: (0.5, 0.4)
+            orientation: 'vertical'
+
+            TextInput:
+                id: email
+                multiline: False
+            TextInput:
+                id: password
+                multiline: False
+                password: True
+            TextInput:
+                id: password_confirm
+                multiline: False
+                password: True
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Button:
+                    text: 'Signup'
+                
+                Button:
+                    text: 'Login'
+                    on_press:
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'login'
+                    
+                    
