@@ -8,15 +8,37 @@
             
             orientation: 'vertical'
 
-            TextInput:
-            TextInput:
-                password: True
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    text: "Username"
+                    size_hint_x: 0.2
+
+                TextInput:
+                    multiline: False
+                    id: username
+
+            BoxLayout:
+                orientation: 'horizontal'
+                
+                Label:
+                    size_hint_x: 0.2
+                    text: "Password"
+    
+                TextInput:
+                    id: password
+                    password: True
+                    multiline: False
 
             BoxLayout:
                 orientation: 'horizontal'
 
                 Button:
                     text: 'Login'
+                    on_press: 
+                        root.manager.transition.direction = 'right'
+                        root.manager.current = 'feed'
                 
                 Button:
                     text: 'Signup'

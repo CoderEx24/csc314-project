@@ -7,17 +7,41 @@
             size_hint: (0.7, 0.5)
             orientation: 'vertical'
 
-            TextInput:
-                id: email
-                multiline: False
-            TextInput:
-                id: password
-                multiline: False
-                password: True
-            TextInput:
-                id: password_confirm
-                multiline: False
-                password: True
+            
+            BoxLayout:
+                orientation: 'horizontal'
+                
+                Label:
+                    size_hint_x: 0.2
+                    text: "Username"
+                
+                TextInput:
+                    id: username
+                    multiline: False
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    size_hint_x: 0.2
+                    text: 'Password'
+
+                TextInput:
+                    id: password
+                    multiline: False
+                    password: True
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                Label:
+                    size_hint_x: 0.2
+                    text: 'Confirm\nPassword'
+
+                TextInput:
+                    id: password_confirm
+                    multiline: False
+                    password: True
 
             BoxLayout:
                 orientation: 'horizontal'
