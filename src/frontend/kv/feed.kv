@@ -1,0 +1,14 @@
+#:import Post post.Post
+
+<FeedScreen>:
+    RecycleView:
+        viewclass: 'Post'
+        id: 'feed'
+        
+        data: [{}, {}, {}]
+        RecycleBoxLayout:
+            orientation: 'vertical'
+            default_size: None, dp(100)
+            default_size_hint: 1, None
+            size_hint_y: 1
+            height: self.minimum_height
