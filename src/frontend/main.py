@@ -4,6 +4,7 @@ from kivy.lang import Builder
 from kivy.app import App
 from loginscreen import *
 from signupscreen import *
+from feed import *
 from os import path
 
 Builder.load_file(path.join(path.dirname(__file__), 'kv', 'main.kv'))

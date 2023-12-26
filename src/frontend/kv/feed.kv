@@ -4,11 +4,13 @@
     RecycleView:
         viewclass: 'Post'
         id: 'feed'
+        scroll_type: ['bars']
         
-        data: [{}, {}, {}]
+        data: [{'text': f'{i}'} for i in range(3)]
+
         RecycleBoxLayout:
             orientation: 'vertical'
-            default_size: None, dp(100)
+            default_size: None, dp(300)
             default_size_hint: 1, None
             size_hint_y: 1
             height: self.minimum_height
