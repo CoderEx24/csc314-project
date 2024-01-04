@@ -9,6 +9,10 @@ def index(req: HttpRequest):
     print(req.user)
     return render(req, 'core/index.html', { 'user': req.user })
 
+def logout_(req: HttpRequest):
+    logout(req)
+    return redirect(reverse('core:index'))
+
 def personal_login(req: HttpRequest):
     if req.method == 'GET':
         return render(req, 'core/login.html', {'form': AuthenticationForm() })
