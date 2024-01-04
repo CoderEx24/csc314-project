@@ -1,5 +1,6 @@
-from django.contrib.auth.models import AnonymousUser
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest
 from .models import *
 from .forms import *
@@ -28,4 +29,30 @@ def company_login(req: HttpRequest):
 
         return render(req, 'core/login.html', {'form': login_form })
 
+def personal_signup(req: HttpRequest):
+    if req.user.is_authenticated:
+        return redirect(reverse('core:index'))
+
+    if req.method == 'POST':
+        signup_form = UserCreationForm(req.data)
+        if signup_form.is_valid():
+            new_user = signup_form.save()
+            login(req, new_user)
+            print(new_user)
+            return redirect(reverse('core:index'))
+
+    return render(req, 'core/signup.html', { 'form': PersonalAccountSignupForm() })
+
+def company_signup(req: HttpRequest):
+    if req.method == 'POST':
+        signup_form = UserCreationForm(req.POST)
+        if signup_form.is_valid():
+            new_user = signup_form.save()
+            new_company_profile = CompanyAccount.objects.create(user=new_user)
+            new_company_profile.save()
+            print(new_user)
+            login(req, new_user)
+
+            return redirect(reverse('core:index'))
+    return render(req, 'core/signup.html', { 'type': 'company', 'form': CompanyAccountSignupForm() })
 

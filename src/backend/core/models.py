@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User as DjangoUser
+from django.contrib.auth.models import AbstractUser 
 from django.db import models
 
 class PersonalAccountEducation(models.Model):
@@ -10,12 +10,14 @@ class PersonalAccountCert(models.Model):
 class PersonalAccountSkill(models.Model):
     skill = models.TextField(max_length=70)
 
-class PersonalAccount(DjangoUser):
+class PersonalAccount(models.Model):
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     education = models.ManyToManyField(PersonalAccountEducation)
     certs = models.ManyToManyField(PersonalAccountCert)  
 
-class CompanyAccount(DjangoUser):
-    contact_number = models.IntegerField()
+class CompanyAccount(models.Model):
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+    contact_number = models.IntegerField(null=True)
 
 class PersonalAccountPost(models.Model):
     title = models.TextField(max_length=70)
