@@ -1,0 +1,5 @@
+{% if user.is_anonymous %}
+<a href="{% url 'core:personal_login' %}"> Log in For Seekers </a>
+{% else %}
+<h1> Logged in as {{ user }}</h1>
+{% endif %}

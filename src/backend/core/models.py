@@ -28,9 +28,9 @@ class PersonalAccountReaction(models.Model):
     post = models.ForeignKey(PersonalAccountPost, on_delete=models.CASCADE)
 
 class PersonalAccountComment(models.Model):
-    commentor = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE \
+    commentor = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE, \
             related_name='comments')
-    post = models.ForeignKey(PersonalAccountPost, on_delete=models.CASCADE \
+    post = models.ForeignKey(PersonalAccountPost, on_delete=models.CASCADE, \
             related_name='comments')
     text = models.TextField(max_length=200)
 
