@@ -4,8 +4,9 @@ from django import forms
 from .models import *
 
 class PersonalAccountSignupForm(UserCreationForm):
-    pass
+    class Meta(UserCreationForm.Meta):
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2']
 
 class CompanyAccountSignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
-        fields = ['first_name', 'username', 'password1', 'password2']
+        fields = ['first_name', 'email', 'username', 'password1', 'password2']
