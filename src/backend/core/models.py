@@ -60,7 +60,9 @@ class JobPost(models.Model):
         return reverse('core:jobpost', kwargs={'pk': self.id})
 
 class JobPostApplication(models.Model):
-    jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
-    applicant = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE)
+    jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE, \
+            related_name='applications')
+    applicant = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE, \
+            related_name='applications')
     application_time = models.DateTimeField(auto_now=True)
 

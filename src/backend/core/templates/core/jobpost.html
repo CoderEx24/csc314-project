@@ -17,6 +17,22 @@
 
 {% elif user_profile == 'company' %}
 
+<h2> Applicants </h2>
 
+<ul>
+
+    {% for app in jobpost.applications.all %}
+    <li>
+        <a href="{% url 'core:personal_profile' app.applicant.id %}"> 
+            {{ app.applicant.user.last_name }}
+            {{ app.applicant.user.first_name }} 
+            - 
+            {{ app.applicant.user.email }}
+            ({{ app.applicant.user.username }}) 
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
 {% else %}
 {% endif %}
