@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpRequest
+from django.db.models import Q
 from .models import *
 from .forms import *
 
@@ -15,7 +16,13 @@ def index(req: HttpRequest):
     elif user_profile == 'company':
         form = JobPostForm()
 
-    return render(req, 'core/index.html', {'profile': user_profile, 'user': req.user, 'form': form })
+    context = { 'profile': user_profile, 
+               'user': req.user, 
+               'form': form,
+               'search_results': None,
+    }
+
+    return render(req, 'core/index.html', context)
 
 def logout_(req: HttpRequest):
     logout(req)
@@ -161,6 +168,27 @@ def add_skill(req: HttpRequest):
         return redirect(reverse('core:personal_profile_self'))
 
     return redirect(reverse('core:personal_profile_self'))
+
+def search_jobposts(req: HttpRequest):
+    user_profile, _ = get_user_profile(req.user)
+
+    form = None
+    if user_profile == 'personal':
+        form = PersonalAccountPostForm()
+
+    elif user_profile == 'company':
+        form = JobPostForm()
+
+    search_query = req.GET['query']
+    search_result = JobPost.objects.filter(Q(job_title__icontains=search_query) | Q(description__icontains=search_query))
+
+    context = { 'profile': user_profile, 
+               'user': req.user, 
+               'form': form,
+               'search_results': search_result,
+   }
+
+    return render(req, 'core/index.html', context)
 
 
 def get_user_profile(user):

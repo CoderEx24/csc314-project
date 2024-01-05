@@ -1,3 +1,9 @@
+<form method="get" action="{% url 'core:search_jobposts' %}">
+    {% csrf_token %}
+    <input type="text" name="query" />
+    <input type="submit" value="Search" />
+</form>
+
 {% if user.is_anonymous %}
 <a href="{% url 'core:personal_login' %}"> Log in For Seekers </a>
 {% else %}
@@ -17,3 +23,14 @@
     <input type="submit" value="post" />
 </form>
 {% endif %}
+
+{% if search_results %}
+<div id="search-results">
+    <ul>
+        {% for result in search_results.all %}
+        <a href="{% url 'core:jobpost' result.id %}"> {{ result.job_title }} By {{ result.poster.user.first_name }}</a>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
