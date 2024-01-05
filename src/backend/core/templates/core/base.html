@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'core/base.css' %}" />
+        <title> Career Link {% block title %}{% endblock %} </title> 
+    </head>
+
+    <body>
+        <ul id="topbar">
+            {% block topbar %}
+           
+            <li id="name"> Career Link </li>
+            {% if user.is_authenticated %}
+            <li>
+                {{ user.username }}
+            </li>
+            <li>
+                <a href="{% url 'core:logout' %}"> logout </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'core:personal_signup' %}"> Signup for Seekers </a>
+            </li>
+            <li>
+                <a href="{% url 'core:personal_login' %}"> Login for Seekers </a>
+            </li>
+            <li>
+                <a href="{% url 'core:company_signup' %}"> Signup for Companies </a>
+            </li>
+            <li>
+                <a href="{% url 'core:company_login' %}"> Login for Companies </a>
+            </li>
+            {% endif %}
+
+
+            {% endblock %}
+        </ul>
+        <div id="content">
+            {% block main_section %}
+            {% endblock %}
+        </div>
+    </body>
+
+</html>

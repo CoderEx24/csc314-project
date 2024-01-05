@@ -1,3 +1,7 @@
+{% extends 'core/base.html' %}
+
+{% block main_section %}
+
 <h1> {{ user.user.username }} </h1>
 
 <h2> Posts </h2>
@@ -29,3 +33,4 @@
     {% endfor %}
 </ul>
 
+{% endblock %}

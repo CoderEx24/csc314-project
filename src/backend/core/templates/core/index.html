@@ -1,36 +1,37 @@
-<form method="get" action="{% url 'core:search_jobposts' %}">
-    {% csrf_token %}
-    <input type="text" name="query" />
-    <input type="submit" value="Search" />
-</form>
+{% extends 'core/base.html' %}
 
-{% if user.is_anonymous %}
-<a href="{% url 'core:personal_login' %}"> Log in For Seekers </a>
-{% else %}
+{% block main_section %}
 
+    <form method="get" action="{% url 'core:search_jobposts' %}">
+        {% csrf_token %}
+        <input type="text" name="query" />
+        <input type="submit" value="Search" />
+    </form>
 
-<h1> Logged in as {{ user }}</h1>
-{% if profile == 'personal' %}
+    {% if user.is_authenticated %}
+    {% if profile == 'personal' %}
 
-<form method="post" action="{% url 'core:post' %}">
-{% elif profile == 'company' %}
+    <form method="post" action="{% url 'core:post' %}">
+    {% elif profile == 'company' %}
 
-<form method="post" action="{% url 'core:jobpost' %}">
-{% endif %}
+    <form method="post" action="{% url 'core:jobpost' %}">
+    {% endif %}
 
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="post" />
-</form>
-{% endif %}
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="post" />
+    </form>
 
-{% if search_results %}
-<div id="search-results">
-    <ul>
-        {% for result in search_results.all %}
-        <a href="{% url 'core:jobpost' result.id %}"> {{ result.job_title }} By {{ result.poster.user.first_name }}</a>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
+    {% endif %}
 
+    {% if search_results %}
+    <div id="search-results">
+        <ul>
+            {% for result in search_results.all %}
+            <a href="{% url 'core:jobpost' result.id %}"> {{ result.job_title }} By {{ result.poster.user.first_name }}</a>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+{% endblock %}

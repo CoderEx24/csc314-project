@@ -1,0 +1,30 @@
+#topbar {
+    background-color: #62fe50;
+    list-style-type: none;
+    margin: 5vh;
+    padding: 3vh;
+}
+
+#topbar li {
+    display: inline;
+    padding: 2vw;
+}
+
+#name {
+    font-size: 18pt;
+    padding: 0;
+}
+
+#topbar li a {
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 16px;
+    transition: 0.3s linear;
+}
+
+#topbar li a:hover {
+    background-color: black;
+    color: white;
+
+}
+

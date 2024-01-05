@@ -1,10 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block main_section %}
+
 <h1>{{ post.title }}</h1>
 <h4>
     By <a href="{% url 'core:personal_profile' post.poster.id %}"> {{ post.poster.user.username }} </a>
-</h4
+</h4>
 
 <p>
     {{ post.body }}
 </p>
+
+{% endblock %}
 
 

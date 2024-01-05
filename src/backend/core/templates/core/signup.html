@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block main_section %}
+<h1> {{ msg }} </h1>
+
+{% if type == 'company' %}
+<form method="post" action="{% url 'core:company_signup' %}">
+{% else %}
+<form method="post" action="{% url 'core:personal_signup' %}">
+{% endif %}
+
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" />
+</form>
+
+{% endblock %}
+
