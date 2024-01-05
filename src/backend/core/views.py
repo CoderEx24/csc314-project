@@ -37,15 +37,18 @@ def personal_signup(req: HttpRequest):
     if req.user.is_authenticated:
         return redirect(reverse('core:index'))
 
+    signup_form = None
+
     if req.method == 'POST':
-        signup_form = UserCreationForm(req.data)
+        signup_form = UserCreationForm(req.POST)
         if signup_form.is_valid():
             new_user = signup_form.save()
+            new_personal_profile = PersonalAccount.objects.create(user=new_user)
+            new_personal_profile.save()
             login(req, new_user)
-            print(new_user)
             return redirect(reverse('core:index'))
 
-    return render(req, 'core/signup.html', { 'form': PersonalAccountSignupForm() })
+    return render(req, 'core/signup.html', { 'form': signup_form or PersonalAccountSignupForm() })
 
 def company_signup(req: HttpRequest):
     if req.method == 'POST':
@@ -54,7 +57,6 @@ def company_signup(req: HttpRequest):
             new_user = signup_form.save()
             new_company_profile = CompanyAccount.objects.create(user=new_user)
             new_company_profile.save()
-            print(new_user)
             login(req, new_user)
 
             return redirect(reverse('core:index'))
