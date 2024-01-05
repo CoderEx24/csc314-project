@@ -51,6 +51,11 @@ def personal_signup(req: HttpRequest):
     return render(req, 'core/signup.html', { 'form': signup_form or PersonalAccountSignupForm() })
 
 def company_signup(req: HttpRequest):
+    if req.user.is_authenticated:
+        return redirect(reverse('core:index'))
+
+    signup_form = None
+
     if req.method == 'POST':
         signup_form = UserCreationForm(req.POST)
         if signup_form.is_valid():
@@ -60,5 +65,5 @@ def company_signup(req: HttpRequest):
             login(req, new_user)
 
             return redirect(reverse('core:index'))
-    return render(req, 'core/signup.html', { 'type': 'company', 'form': CompanyAccountSignupForm() })
+    return render(req, 'core/signup.html', { 'type': 'company', 'form': signup_form or CompanyAccountSignupForm() })
 
