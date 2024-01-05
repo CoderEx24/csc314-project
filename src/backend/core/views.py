@@ -91,9 +91,13 @@ def post(req: HttpRequest, pk=-1):
     elif req.method == 'POST':
         if not req.user.is_authenticated:
             return redirect(reverse('core:personal_login'))
+
+        _, poster = get_user_profile(req.user)
         post_form = PersonalAccountPostForm(req.POST)
         if post_form.is_valid():
-            post_form.save(commit=True)
+            post = post_form.save(commit=False)
+            post.poster = poster
+            post.save()
         
         return redirect(reverse('core:index'))
 

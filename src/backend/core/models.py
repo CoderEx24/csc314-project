@@ -15,12 +15,15 @@ class PersonalAccount(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     education = models.ManyToManyField(PersonalAccountEducation)
     certs = models.ManyToManyField(PersonalAccountCert)  
+    skills = models.ManyToManyField(PersonalAccountSkill)
 
 class CompanyAccount(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     contact_number = models.IntegerField(null=True)
 
 class PersonalAccountPost(models.Model):
+    poster = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE, \
+            related_name='posts')
     title = models.TextField(max_length=70)
     body = models.TextField(max_length=200)
     disable_reactions = models.BooleanField(default=False)
