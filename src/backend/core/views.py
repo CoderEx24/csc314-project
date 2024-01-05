@@ -130,9 +130,38 @@ def jobpost(req: HttpRequest, pk=-1):
 
         return render(req, 'core/jobpost.html', {'user_profile': user_profile, 'jobpost_form': jobpost_form })
 
-def personal_profile(req: HttpRequest, pk=-1):
-    user = get_object_or_404(PersonalAccount, pk=pk)
-    return render(req, 'core/personal_profile.html', {'user': user})
+def personal_profile(req: HttpRequest, is_self, pk=-1):
+    user = get_object_or_404(PersonalAccount, pk=req.user.id if is_self else pk)
+    is_self = is_self or user.user == req.user
+    add_skill_form = AddSkillForm(user) if is_self else None
+    return render(req, 'core/personal_profile.html', {'user': user, 'is_self': is_self, 'add_skill_form': add_skill_form})
+
+def add_skill(req: HttpRequest):
+    if not req.user.is_authenticated:
+        return redirect(reverse('core:personal_login'))
+
+    if req.method != 'POST':
+        # TODO: raise an error
+        return redirect(reverse('core:index'))
+    
+    profile_type, profile = get_user_profile(req.user)
+
+    if profile_type != 'personal':
+        # TODO: raise an error
+        return redirect(reverse('core:index'))
+
+    skill_form = AddSkillForm(profile, req.POST)
+
+    if skill_form.is_valid():
+        skill = skill_form.cleaned_data['skill']
+        skill = PersonalAccountSkill.objects.get(skill=skill)
+        profile.skills.add(skill)
+        profile.save()
+
+        return redirect(reverse('core:personal_profile_self'))
+
+    return redirect(reverse('core:personal_profile_self'))
+
 
 def get_user_profile(user):
     user_type = ''

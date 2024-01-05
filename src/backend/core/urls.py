@@ -14,6 +14,8 @@ urlpatterns = [
         path('post/<int:pk>', post, name='post'),
         path('jobpost', jobpost, name='jobpost'),
         path('jobpost/<int:pk>', jobpost, name='jobpost'),
-        path('personal/<int:pk>', personal_profile, name='personal_profile'),
+        path('personal/<int:pk>', partial(personal_profile, is_self=False), name='personal_profile'),
+        path('personal/profile', partial(personal_profile, is_self=True), name='personal_profile_self'),
+        path('personal/add_skill', add_skill, name='add_skill'),
 ]
 

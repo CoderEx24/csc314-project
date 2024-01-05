@@ -11,6 +11,9 @@ class PersonalAccountCert(models.Model):
 class PersonalAccountSkill(models.Model):
     skill = models.TextField(max_length=70)
 
+    def __str__(self):
+        return self.skill
+
 class PersonalAccount(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     education = models.ManyToManyField(PersonalAccountEducation)

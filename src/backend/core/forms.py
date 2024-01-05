@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm 
 from django import forms
+from django.db.models import Q
 from .models import *
 
 class PersonalAccountSignupForm(UserCreationForm):
@@ -26,5 +27,14 @@ class JobPostForm(forms.ModelForm):
         widgets = {
                 'job_title': forms.TextInput()
         }
+
+class AddSkillForm(forms.Form):
+    skill = forms.ModelChoiceField(None)
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['skill'].queryset = \
+                PersonalAccountSkill.objects.exclude(id__in=user.skills.all())
 
 
