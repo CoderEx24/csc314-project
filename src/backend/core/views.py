@@ -14,24 +14,32 @@ def logout_(req: HttpRequest):
     return redirect(reverse('core:index'))
 
 def personal_login(req: HttpRequest):
-    if req.method == 'GET':
-        return render(req, 'core/login.html', {'form': AuthenticationForm() })
-    elif req.method == 'POST':
-        login_form = AuthenticationForm(req.data)
-        if login_form.is_valid():
-            return render(req, 'core/index.html', {'user': req.user })
+    if req.user.is_authenticated:
+        return redirect(reverse('core:index'))
 
-        return render(req, 'core/login.html', {'form': login_form })
+    login_form = None
+    if req.method == 'POST':
+        login_form = AuthenticationForm(req, req.POST)
+        if login_form.is_valid():
+            user = login_form.get_user()
+            login(req, user)
+            return redirect(reverse('core:index'))
+
+    return render(req, 'core/login.html', {'form': login_form or AuthenticationForm() })
 
 def company_login(req: HttpRequest):
-    if req.method == 'GET':
-        return render(req, 'core/login.html', {'form': AuthenticationForm() })
-    elif req.method == 'POST':
-        login_form = AuthenticationForm(req.data)
-        if login_form.is_valid():
-            return render(req, 'core/index.html', {'user': req.user })
+    if req.user.is_authenticated:
+        return redirect(reverse('core:index'))
 
-        return render(req, 'core/login.html', {'form': login_form })
+    login_form = None
+    if req.method == 'POST':
+        login_form = AuthenticationForm(req, req.POST)
+        if login_form.is_valid():
+            user = login_form.get_user()
+            login(req, user)
+            return redirect(reverse('core:index'))
+
+    return render(req, 'core/login.html', {'type': 'company', 'form': login_form or AuthenticationForm() })
 
 def personal_signup(req: HttpRequest):
     if req.user.is_authenticated:

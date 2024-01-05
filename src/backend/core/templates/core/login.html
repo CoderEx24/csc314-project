@@ -1,1 +1,11 @@
-{{ form }}
+
+{% if type == 'company' %}
+<form method="post" action="{% url 'core:company_login' %}">
+{% else %}
+<form method="post" action="{% url 'core:personal_login' %}">
+{% endif %}
+
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Login"/>
+</form>
