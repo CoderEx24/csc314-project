@@ -107,7 +107,6 @@ def jobpost(req: HttpRequest, pk=-1):
         return render(req, 'core/jobpost.html', {'user_profile': user_profile, 'jobpost': jobpost })
 
     elif req.method == 'POST' and user_profile == 'personal':
-        print("applying to ", req.POST['jobpost_id'])
         jobpost = get_object_or_404(JobPost, pk=req.POST['jobpost_id'])
         try:
             JobPostApplication.objects.get(jobpost=jobpost, applicant=profile_obj)
@@ -147,5 +146,5 @@ def get_user_profile(user):
             except CompanyAccount.DoesNoExist:
                 pass
 
-    return (user_type, user_obj)
+    return user_type, user_obj
 
