@@ -130,6 +130,10 @@ def jobpost(req: HttpRequest, pk=-1):
 
         return render(req, 'core/jobpost.html', {'user_profile': user_profile, 'jobpost_form': jobpost_form })
 
+def personal_profile(req: HttpRequest, pk=-1):
+    user = get_object_or_404(PersonalAccount, pk=pk)
+    return render(req, 'core/personal_profile.html', {'user': user})
+
 def get_user_profile(user):
     user_type = ''
     user_obj = None

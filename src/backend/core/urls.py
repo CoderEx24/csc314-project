@@ -14,5 +14,6 @@ urlpatterns = [
         path('post/<int:pk>', post, name='post'),
         path('jobpost', jobpost, name='jobpost'),
         path('jobpost/<int:pk>', jobpost, name='jobpost'),
+        path('personal/<int:pk>', personal_profile, name='personal_profile'),
 ]
 

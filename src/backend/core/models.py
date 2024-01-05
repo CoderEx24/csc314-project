@@ -17,6 +17,9 @@ class PersonalAccount(models.Model):
     certs = models.ManyToManyField(PersonalAccountCert)  
     skills = models.ManyToManyField(PersonalAccountSkill)
 
+    def get_absolute_url(self):
+        return reverse('core:personal_profile', kwargs={'pk': self.id})
+
 class CompanyAccount(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
     contact_number = models.IntegerField(null=True)
@@ -30,7 +33,7 @@ class PersonalAccountPost(models.Model):
     disable_comments = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse('core:post', args={'pk': self.id})
+        return reverse('core:post', kwargs={'pk': self.id})
 
 class PersonalAccountReaction(models.Model):
     reactor = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE)
@@ -54,7 +57,7 @@ class JobPost(models.Model):
     required_certificates = models.ManyToManyField(PersonalAccountCert)
 
     def get_absolute_url(self):
-        return reverse('core:jobpost', args={'pk': self.id})
+        return reverse('core:jobpost', kwargs={'pk': self.id})
 
 class JobPostApplication(models.Model):
     jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE)

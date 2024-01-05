@@ -1,4 +1,7 @@
 <h1>{{ post.title }}</h1>
+<h4>
+    By <a href="{% url 'core:personal_profile' post.poster.id %}"> {{ post.poster.user.username }} </a>
+</h4
 
 <p>
     {{ post.body }}
