@@ -50,3 +50,11 @@ class JobPost(models.Model):
     required_education = models.ForeignKey(PersonalAccountEducation, null=True, on_delete=models.SET_NULL)
     required_certificates = models.ManyToManyField(PersonalAccountCert)
 
+    def get_absolute_url(self):
+        return reverse('core:jobpost', args={'pk': self.id})
+
+class JobPostApplication(models.Model):
+    jobpost = models.ForeignKey(JobPost, on_delete=models.CASCADE)
+    applicant = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE)
+    application_time = models.DateTimeField(auto_now=True)
+

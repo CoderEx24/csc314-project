@@ -4,9 +4,16 @@
 
 
 <h1> Logged in as {{ user }}</h1>
+{% if profile == 'personal' %}
+
 <form method="post" action="{% url 'core:post' %}">
+{% elif profile == 'company' %}
+
+<form method="post" action="{% url 'core:jobpost' %}">
+{% endif %}
+
     {% csrf_token %}
-    {{ post_form }}
+    {{ form }}
     <input type="submit" value="post" />
 </form>
 {% endif %}

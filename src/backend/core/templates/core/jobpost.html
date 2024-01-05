@@ -1,0 +1,22 @@
+
+<h1> {{ jobpost.job_title }} </h1>
+
+<p>
+    {{ jobpost.description }}
+</p>
+
+<span> Salary: {{ jobpost.min_salary }} - {{ jobpost.max_salary }} </span>
+
+{% if user_profile == 'personal' %}
+
+<form method="post" action="{% url 'core:jobpost' %}">
+    {% csrf_token %}
+    <input type="hidden" name="jobpost_id" value="{{ jobpost.id }}" />
+    <input type="submit" value="Apply" />
+</form>
+
+{% elif user_profile == 'company' %}
+
+
+{% else %}
+{% endif %}

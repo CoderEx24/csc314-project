@@ -19,3 +19,12 @@ class PersonalAccountPostForm(forms.ModelForm):
                 'title': forms.TextInput()
         }
 
+class JobPostForm(forms.ModelForm):
+    class Meta:
+        model = JobPost
+        fields = ['job_title', 'description', 'max_salary', 'min_salary']
+        widgets = {
+                'job_title': forms.TextInput()
+        }
+
+

@@ -6,7 +6,16 @@ from .models import *
 from .forms import *
 
 def index(req: HttpRequest):
-    return render(req, 'core/index.html', { 'user': req.user, 'post_form': PersonalAccountPostForm() })
+    user_profile, _ = get_user_profile(req.user)
+
+    form = None
+    if user_profile == 'personal':
+        form = PersonalAccountPostForm()
+
+    elif user_profile == 'company':
+        form = JobPostForm()
+
+    return render(req, 'core/index.html', {'profile': user_profile, 'user': req.user, 'form': form })
 
 def logout_(req: HttpRequest):
     logout(req)
@@ -88,4 +97,55 @@ def post(req: HttpRequest, pk=-1):
         
         return redirect(reverse('core:index'))
 
+
+def jobpost(req: HttpRequest, pk=-1):
+
+    user_profile, profile_obj = get_user_profile(req.user)
+
+    if req.method == 'GET':
+        jobpost = get_object_or_404(JobPost, pk=pk)
+        return render(req, 'core/jobpost.html', {'user_profile': user_profile, 'jobpost': jobpost })
+
+    elif req.method == 'POST' and user_profile == 'personal':
+        print("applying to ", req.POST['jobpost_id'])
+        jobpost = get_object_or_404(JobPost, pk=req.POST['jobpost_id'])
+        try:
+            JobPostApplication.objects.get(jobpost=jobpost, applicant=profile_obj)
+
+        except JobPostApplication.DoesNotExist:
+            application = JobPostApplication.objects.create(jobpost=jobpost, applicant=profile_obj)
+            application.save()
+
+        return redirect(reverse('core:index'))
+
+    elif req.method == 'POST' and user_profile == 'company':
+        jobpost_form = JobPostForm(req.POST)
+        if jobpost_form.is_valid():
+            jobpost = jobpost_form.instance.poster = profile_obj
+            jobpost_form.save()
+            return redirect(reverse('core:index'))
+
+        return render(req, 'core/jobpost.html', {'user_profile': user_profile, 'jobpost_form': jobpost_form })
+
+def get_user_profile(user):
+    user_type = ''
+    user_obj = None
+    got_user = False
+
+    if user.is_authenticated:
+        try:
+            user_obj = PersonalAccount.objects.get(user=user)
+            user_type = 'personal'
+            got_user = True
+        except PersonalAccount.DoesNotExist:
+            pass
+
+        if not got_user:
+            try:
+                user_obj = CompanyAccount.objects.get(user=user)
+                user_type = 'company'
+            except CompanyAccount.DoesNoExist:
+                pass
+
+    return (user_type, user_obj)
 

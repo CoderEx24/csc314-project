@@ -12,5 +12,7 @@ urlpatterns = [
         path('signup/company', company_signup, name='company_signup'),
         path('post', post, name='post'),
         path('post/<int:pk>', post, name='post'),
+        path('jobpost', jobpost, name='jobpost'),
+        path('jobpost/<int:pk>', jobpost, name='jobpost'),
 ]
 
