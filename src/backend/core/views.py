@@ -1,13 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpRequest
 from .models import *
 from .forms import *
 
 def index(req: HttpRequest):
-    print(req.user)
-    return render(req, 'core/index.html', { 'user': req.user })
+    return render(req, 'core/index.html', { 'user': req.user, 'post_form': PersonalAccountPostForm() })
 
 def logout_(req: HttpRequest):
     logout(req)
@@ -74,4 +73,19 @@ def company_signup(req: HttpRequest):
 
             return redirect(reverse('core:index'))
     return render(req, 'core/signup.html', { 'type': 'company', 'form': signup_form or CompanyAccountSignupForm() })
+
+def post(req: HttpRequest, pk=-1):
+    if req.method == 'GET':
+        post = get_object_or_404(PersonalAccountPost, pk=pk)
+        return render(req, 'core/post.html', {'post': post})
+
+    elif req.method == 'POST':
+        if not req.user.is_authenticated:
+            return redirect(reverse('core:personal_login'))
+        post_form = PersonalAccountPostForm(req.POST)
+        if post_form.is_valid():
+            post_form.save(commit=True)
+        
+        return redirect(reverse('core:index'))
+
 

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser 
+from django.shortcuts import reverse
 from django.db import models
 
 class PersonalAccountEducation(models.Model):
@@ -24,6 +25,9 @@ class PersonalAccountPost(models.Model):
     body = models.TextField(max_length=200)
     disable_reactions = models.BooleanField(default=False)
     disable_comments = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse('core:post', args={'pk': self.id})
 
 class PersonalAccountReaction(models.Model):
     reactor = models.ForeignKey(PersonalAccount, on_delete=models.CASCADE)

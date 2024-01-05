@@ -10,3 +10,12 @@ class PersonalAccountSignupForm(UserCreationForm):
 class CompanyAccountSignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ['first_name', 'email', 'username', 'password1', 'password2']
+
+class PersonalAccountPostForm(forms.ModelForm):
+    class Meta:
+        model = PersonalAccountPost
+        fields = ['title', 'body']
+        widgets = {
+                'title': forms.TextInput()
+        }
+

@@ -1,5 +1,12 @@
 {% if user.is_anonymous %}
 <a href="{% url 'core:personal_login' %}"> Log in For Seekers </a>
 {% else %}
+
+
 <h1> Logged in as {{ user }}</h1>
+<form method="post" action="{% url 'core:post' %}">
+    {% csrf_token %}
+    {{ post_form }}
+    <input type="submit" value="post" />
+</form>
 {% endif %}

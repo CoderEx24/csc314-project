@@ -10,5 +10,7 @@ urlpatterns = [
         path('login/company', company_login, name='company_login'),
         path('signup/personal', personal_signup, name='personal_signup'),
         path('signup/company', company_signup, name='company_signup'),
+        path('post', post, name='post'),
+        path('post/<int:pk>', post, name='post'),
 ]
 
