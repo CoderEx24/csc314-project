@@ -56,7 +56,7 @@ def personal_signup(req: HttpRequest):
     signup_form = None
 
     if req.method == 'POST':
-        signup_form = UserCreationForm(req.POST)
+        signup_form = PersonalAccountSignupForm(req.POST)
         if signup_form.is_valid():
             new_user = signup_form.save()
             new_personal_profile = PersonalAccount.objects.create(user=new_user)
