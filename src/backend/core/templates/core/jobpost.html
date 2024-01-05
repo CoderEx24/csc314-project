@@ -1,6 +1,12 @@
 
 <h1> {{ jobpost.job_title }} </h1>
 
+<h3> Offered by 
+    <a href="">
+        {{ jobpost.poster.user.first_name }} 
+    </a>
+</h3>
+
 <p>
     {{ jobpost.description }}
 </p>
@@ -25,7 +31,7 @@
     <li>
         <a href="{% url 'core:personal_profile' app.applicant.id %}"> 
             {{ app.applicant.user.last_name }}
-            {{ app.applicant.user.first_name }} 
+            , {{ app.applicant.user.first_name }} 
             - 
             {{ app.applicant.user.email }}
             ({{ app.applicant.user.username }}) 
